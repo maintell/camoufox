@@ -82,6 +82,8 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
+          # ccache: the mozconfig enables --with-ccache, but the runner image no
+          # longer ships it, so configure fails with "Cannot find ccache".
           sudo apt-get install -y msitools p7zip-full aria2 ccache
 
       - name: Fetch source
@@ -92,19 +94,34 @@ jobs:
 
       - name: Setup and bootstrap
         run: |
-          make setup-minimal
+          # `setup-minimal` is docker-only (no local git repo). On a GitHub runner,
+          # actions/checkout leaves a .git at the repo root, so patch.py's
+          # `git clean -fdx && git reset --hard unpatched` (run inside the non-git
+          # source dir) escalates to that checkout .git and deletes the entire
+          # (untracked) Firefox source -> "./mach: not found" and set-target fails.
+          # `make setup` creates a NESTED git repo in the source dir with the
+          # `unpatched` tag patch.py expects, isolating the reset.
+          git config --global user.email "ci@camoufox.local"
+          git config --global user.name "Camoufox CI"
+          make setup
           make mozbootstrap
           mkdir -p dist
 
       - name: Create swap space
         run: |
-          sudo fallocate -l 16G /swapfile
+          # libxul/Rust can exceed 16 GB RAM + 16 GB swap and the runner gets
+          # SIGTERM'd (exit 143) mid-build; disk is plentiful (~115 GB free).
+          sudo fallocate -l 32G /swapfile
           sudo chmod 600 /swapfile
           sudo mkswap /swapfile
           sudo swapon /swapfile
           free -h
 
       - name: Build
+        env:
+          # Cap Rust parallelism to lower peak memory (avoids OOM/SIGTERM).
+          # Tune to taste: higher = faster but more RAM.
+          CARGO_BUILD_JOBS: "2"
         run: python3 ./multibuild.py --target ${{ matrix.target }} --arch ${{ matrix.arch }}
 
       - name: Upload artifacts
