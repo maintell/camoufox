@@ -150,6 +150,7 @@ def main():
     # Generate Assets.car if building for macOS
     if 'macos' in args.target:
         BSYS.generate_assets_car()
+        run('make setup-macos-sdk')
 
     # Ensure dist directory exists
     os.makedirs('dist', exist_ok=True)

@@ -198,14 +198,14 @@ Camoufox is intended to be used with rotating proxies (preferably residential IP
   </tr>
   <tr>
     <td width="25%" align="center" valign="middle">
-      <a href="https://go.nodemaven.com/daijro" target="_blank">
-        <img width="380" alt="nodemaven" src="https://github.com/user-attachments/assets/3c4075dd-105a-4ed4-a68a-e8cb127bedfa"/>
+      <a href="https://go.nodemaven.com/daijronew" target="_blank">
+        <img width="380" alt="nodemaven" src="https://github.com/user-attachments/assets/49608eb7-7c1b-4904-bdf8-53e69c7eda8c"/>
       </a>
     </td>
     <td valign="middle">
-      <a href="https://go.nodemaven.com/daijro">NodeMaven</a>: The most reliable proxy provider with the Highest Quality IP on the market.<br>
+      <a href="https://go.nodemaven.com/daijronew">NodeMaven</a>: The most reliable proxy provider with the Highest Quality IP on the market.<br>
       Best solution for automation, web scraping, SEO research, and social media management.<br>
-      <a href="https://go.nodemaven.com/daijro">NodeMaven</a> offers:<br>
+      <a href="https://go.nodemaven.com/daijronew">NodeMaven</a> offers:<br>
       • Sticky sessions up to 7 days<br>
       • 99.9% uptime<br>
       • IP filtering: all proxies have fraud score <97%<br>
